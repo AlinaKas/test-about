@@ -264,20 +264,17 @@ img {
   }
 }
 
-.about__btn {
-  padding: 0;
-  display: inline;
+.truncate_more_link {
+  display: inline-block;
   font-family: 'Caveat Brush', cursive;
   font-size: 18px;
   line-height: 3.61;
   color: #ab816c;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  text-decoration: none;
 }
 
 @media screen and (min-width: 1280px) {
-  .about__btn {
+  .truncate_more_link {
     display: none;
   }
 }

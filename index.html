@@ -41,16 +41,11 @@
         </div>
     <div class="about__text-wrap about__text-wrap--textblock-hidden">
         <h2 class="section__title">About us</h2>
-        <p class="about__description">Oh My Donut is the shop which adores tasty deserts and spend hours to create sophisticated
-            donuts which will save the world!</p>
-
-            <p class="about__text">Eva has been baking since she was six years old and over the last 49 years, she has created
-                hundreds of cakes for weddings and has baked for many celebrities. Eva and our shop have received multiple awards & recognition for excellence.</p>
-            <span id="dots">  </span>
-            <p class="about__text-add"><span id="more">We are going to teach you how to cook with passion and sparkles in your eyes! We love what we do and believe you will enjoy our cooking atmosphere!</span></p>
-
-            <button onclick="myFunction()" id="myBtn" class="about__btn">Read more</button>
+        <p class="about__description">Oh My Donut is the shop which adores tasty deserts and spend hours to create sophisticated donuts which will save the world!</p>
+        <p class="about__text">Eva has been baking since she was six years old and over the last 49 years, she has created hundreds of cakes for weddings and has baked for many celebrities. Eva and our shop have received multiple awards & recognition for excellence.</p>
+        <p class="about__text story">We are going to teach you how to cook with passion and sparkles in your eyes! We love what we do and believe you will enjoy our cooking atmosphere!</p>
     </div>
+    <!-- ДЛЯ ДЕСКТОПА -->
     <div class="about__text-wrap about__text-wrap--textblock-visable">
         <h2 class="section__title">About us</h2>
         <p class="about__description">Oh My Donut is the shop which adores tasty deserts and spend hours to create
@@ -66,32 +61,76 @@
 </main>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="js/readmore.js"></script>
-        <!-- <script>
-            $('article').readmore({
-                maxHeight: 320,
-                moreLink: '<a href="#" class="link"><span class="about__text-label">Read more</span></a>',
-                lessLink: '<a href="#" class="link"><span class="about__text-label">Less</span></a>'
-            });
-        </script> -->
 
 <!-- РАБОЧИЙ СКРИПТ -->
 
     <script>
-      function myFunction() {
-            var dots = document.getElementById("dots");
-            var moreText = document.getElementById("more");
-            var btnText = document.getElementById("myBtn");
 
-            if (dots.style.display === "none") {
-                dots.style.display = "inline";
-                btnText.innerHTML = "Read more";
-                moreText.style.display = "none";
+(function($) {
+  $.fn.truncate = function(options) {
+
+    var defaults = {
+      length: 100,
+      minTrail: 10,
+      moreText: "",
+      lessText: "",
+      ellipsisText: ""
+    };
+
+    var options = $.extend(defaults, options);
+
+    return this.each(function() {
+      obj = $(this);
+      var body = obj.html();
+
+      if (body.length > options.length + options.minTrail) {
+        var splitLocation = body.indexOf(' ', options.length);
+        if (splitLocation != -1) {
+
+          var splitLocation = body.indexOf(' ', options.length);
+          var str1 = body.substring(0, splitLocation);
+          var str2 = body.substring(splitLocation, body.length - 1);
+          obj.html(str1 + '<span class="truncate_ellipsis">' + options.ellipsisText +
+            '</span>' + '<span  class="truncate_more">' + str2 + '</span>');
+          obj.find('.truncate_more').css("display", "none");
+
+          obj.append(
+            '<div class="clearboth">' +
+            '<a href="#" class="truncate_more_link">' + options.moreText + '</a>' +
+            '</div>'
+          );
+
+          var moreLink = $('.truncate_more_link', obj);
+          var moreContent = $('.truncate_more', obj);
+          var ellipsis = $('.truncate_ellipsis', obj);
+          moreLink.click(function() {
+            if (moreLink.text() == options.moreText) {
+              moreContent.show('normal');
+              moreLink.text(options.lessText);
+              ellipsis.css("display", "none");
             } else {
-                dots.style.display = "none";
-                btnText.innerHTML = "Less";
-                moreText.style.display = "inline";
+              moreContent.hide('normal');
+              moreLink.text(options.moreText);
+              ellipsis.css("display", "inline");
             }
+            return false;
+          });
         }
+      }
+
+    });
+  };
+})(jQuery);
+
+$().ready(function() {
+  $('.story').truncate({
+    length: 0,
+    minTrail: 10,
+    moreText: 'Read more',
+    lessText: 'Less',
+    ellipsisText: ""
+  });
+});
     </script>
 </body>
 </html>
