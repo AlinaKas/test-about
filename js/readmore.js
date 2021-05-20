@@ -1,6 +1,3 @@
-
-
-<script>
 (function($) {
   $.fn.truncate = function(options) {
 
@@ -66,4 +63,3 @@ $().ready(function() {
     ellipsisText: ""
   });
 });
-    </script>
